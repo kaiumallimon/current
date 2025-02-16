@@ -10,7 +10,7 @@ class CustomDivider extends StatelessWidget {
     // get theme
     final theme = Theme.of(context).colorScheme;
     return Divider(
-      color: theme.onSurface.withOpacity(.1),
+      color: theme.onSurface.withOpacity(.24),
       height: 1,
     );
   }

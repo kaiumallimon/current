@@ -17,4 +17,6 @@ class AppString {
   static const signup = "Sign up";
   static const agree = 'I agree with current privacy and policy';
   static const haveAccount = 'Already have an account?';
+  static const warning = "Warning";
+  static const unavailableFeature = 'This feature is not available yet!';
 }

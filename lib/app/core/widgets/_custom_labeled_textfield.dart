@@ -33,6 +33,7 @@ class CustomLabeledTextField extends StatelessWidget {
         Container(
           width: width,
           height: height,
+          padding: EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.onSurface.withOpacity(.08),
             borderRadius: BorderRadius.circular(10),
@@ -48,8 +49,6 @@ class CustomLabeledTextField extends StatelessWidget {
                   color:
                       Theme.of(context).colorScheme.onSurface.withOpacity(.5)),
               border: InputBorder.none,
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),
           ),
         ),
