@@ -2,6 +2,7 @@ class AppAssets {
   // logo [image]
   static const String logo = 'assets/images/current-logo.png';
   static const String logo2 = 'assets/images/current-logo_2.png';
+  static const String placeholder = 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png';
 
   // icons [svg]
   static const String home = 'assets/svgs/home.svg';

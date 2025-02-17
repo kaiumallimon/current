@@ -3,13 +3,24 @@ import 'package:get/get.dart';
 import 'package:current/app/data/models/home/_category_model.dart';
 
 import '../../../core/constants/_colors.dart';
+import '../../../data/models/home/_banner_model.dart';
 import '../../../data/repositories/home/_home_repository.dart';
 
 class HomeController extends GetxController {
   var isCategoryLoading = false.obs;
   var categories = <CategoryModel>[].obs; // Correct RxList type
 
+  var isBannerLoading = false.obs;
+  var banners = <BannerModel>[].obs; // Correct RxList type
+
   final HomeRepository _repository = HomeRepository();
+
+  @override
+  void onInit() {
+    fetchCategories();
+    fetchBanners();
+    super.onInit();
+  }
 
   void fetchCategories() async {
     try {
@@ -20,6 +31,19 @@ class HomeController extends GetxController {
       showSnackbar('Error', e.toString(), true);
     } finally {
       isCategoryLoading.value = false; // Stop loading
+    }
+  }
+
+  void fetchBanners() async {
+    try {
+      isBannerLoading.value = true; // Start loading
+      var fetchedBanners = await _repository.getBanners();
+      print(fetchedBanners);
+      banners.assignAll(fetchedBanners);
+    } catch (e) {
+      showSnackbar('Error', e.toString(), true);
+    } finally {
+      isBannerLoading.value = false; // Stop loading
     }
   }
 
@@ -34,9 +58,9 @@ class HomeController extends GetxController {
     );
   }
 
-  @override
-  void onInit() {
+
+  void refreshHome() {
     fetchCategories();
-    super.onInit();
+    fetchBanners();
   }
 }
