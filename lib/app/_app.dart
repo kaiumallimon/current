@@ -19,6 +19,10 @@ class CurrentApp extends StatelessWidget {
       initialBinding: AppBindings(),
       initialRoute: '/',
       getPages: AppRoute().getPages,
+
+      onInit: (){
+        
+      },
     );
   }
 }

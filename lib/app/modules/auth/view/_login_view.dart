@@ -2,11 +2,13 @@ import 'package:current/app/core/constants/_assets.dart';
 import 'package:current/app/core/constants/_strings.dart';
 import 'package:current/app/core/widgets/_gradient_bg.dart';
 import 'package:current/app/modules/auth/view/_signup_view.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/_sizes.dart';
 import '../../../core/widgets/_auth_data_container_decoration.dart';
+import '../../../core/widgets/_custom_button.dart';
 import '../../../core/widgets/_custom_divider.dart';
 import '../../../core/widgets/_custom_labeled_textfield.dart';
 import '../../../core/widgets/_custom_svg_button.dart';
@@ -172,6 +174,7 @@ class LoginView extends StatelessWidget {
             )),
           ],
         ),
+        
       ),
     );
   }

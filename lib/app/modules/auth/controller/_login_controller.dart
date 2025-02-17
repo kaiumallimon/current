@@ -102,4 +102,9 @@ class LoginController extends GetxController {
       },
     );
   }
+
+  void logout(){
+    _loginRepository.logout();
+    Get.offAllNamed('/login');
+  }
 }

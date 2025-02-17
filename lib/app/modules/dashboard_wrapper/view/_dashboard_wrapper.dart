@@ -1,4 +1,6 @@
+import 'package:current/app/modules/auth/controller/_login_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DashboardWrapper extends StatelessWidget {
   const DashboardWrapper({super.key});
@@ -8,7 +10,11 @@ class DashboardWrapper extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: Center(
-          child: Text('DashboardWrapper'),
+          child: ElevatedButton(
+              onPressed: () {
+                Get.find<LoginController>().logout();
+              },
+              child: Text('Logout')),
         ),
       ),
     );

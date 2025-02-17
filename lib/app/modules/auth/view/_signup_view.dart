@@ -1,12 +1,15 @@
 import 'package:current/app/modules/auth/controller/_register_controller.dart';
 import 'package:current/app/modules/auth/view/sections/_register_subtitle.dart';
 import 'package:current/app/modules/auth/view/sections/_register_title.dart';
+import 'package:current/app/modules/privacy_policy/controller/_privacy_policy_controller.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/_assets.dart';
 import '../../../core/constants/_sizes.dart';
 import '../../../core/constants/_strings.dart';
+import '../../../core/widgets/_custom_button.dart';
 import '../../../core/widgets/_custom_divider.dart';
 import '../../../core/widgets/_custom_labeled_textfield.dart';
 import '../../../core/widgets/_custom_svg_button.dart';
@@ -141,8 +144,8 @@ class SignupView extends StatelessWidget {
                       width: 400,
                       height: AppSize.buttonHeight,
                       text: AppString.signup,
-                      onPressed: () async{
-                      await controller.register();
+                      onPressed: () async {
+                        await controller.register();
                       }),
 
                   const SizedBox(height: 5),
@@ -170,46 +173,42 @@ class SignupView extends StatelessWidget {
             )),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CustomButton extends StatelessWidget {
-  const CustomButton({
-    super.key,
-    required this.theme,
-    required this.width,
-    required this.height,
-    required this.onPressed,
-    required this.text,
-  });
-
-  final ColorScheme theme;
-  final double width;
-  final double height;
-  final VoidCallback onPressed;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        height: height,
-        width: width,
-        decoration: BoxDecoration(
-          color: theme.primary,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Center(
-          child: Text(text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: theme.surface,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16)),
-        ),
+        persistentFooterButtons: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text.rich(
+                TextSpan(
+                    text: "By continuing, you agree to our ",
+                    style: TextStyle(color: theme.onSurface, fontSize: 14),
+                    children: [
+                      TextSpan(
+                          text: "Terms of Service",
+                          style: TextStyle(
+                              color: theme.onSurface,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14)),
+                      TextSpan(text: " and "),
+                      TextSpan(
+                          text: "Privacy Policy",
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Get.find<PrivacyPolicyController>()
+                                  .showPrivacyModalSheet(context, theme);
+                            },
+                          style: TextStyle(
+                              color: theme.primary,
+                              decoration: TextDecoration.underline,
+                              decorationColor: theme.primary,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700)),
+                      TextSpan(
+                          text: ".",
+                          style:
+                              TextStyle(color: theme.onSurface, fontSize: 14)),
+                    ]),
+                style: TextStyle(color: theme.onSurface.withOpacity(.7))),
+          ),
+        ],
       ),
     );
   }
