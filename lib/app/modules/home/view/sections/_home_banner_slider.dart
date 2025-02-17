@@ -36,7 +36,7 @@ CarouselSlider buildHomeBannerSlider(
                       // Overlay gradient
                       sliderOverlayGradient(theme),
                       // Overlay content
-                      sliderTexts(banner, theme, context),
+                      sliderContents(banner, theme, context),
                     ],
                   ),
                 ),
@@ -82,7 +82,7 @@ FadeInImage sliderImage(BannerModel banner) {
 // - title: bold, black
 // - subtitle: light, grey
 
-Positioned sliderTexts(
+Positioned sliderContents(
     BannerModel banner, ColorScheme theme, BuildContext context) {
   return Positioned(
     left: 20,
@@ -99,7 +99,7 @@ Positioned sliderTexts(
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 5), // Add some spacing between title and subtitle
+        const SizedBox(height: 5),
         Wrap(
           children: [
             SizedBox(
@@ -116,6 +116,32 @@ Positioned sliderTexts(
               ),
             ),
           ],
+        ),
+        const SizedBox(height: 10),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+          decoration: BoxDecoration(
+            color: theme.primary,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            children: [
+              Text(
+                'Shop Now',
+                style: TextStyle(
+                  color: theme.onPrimary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(width: 5),
+              Icon(
+                Icons.arrow_forward_ios,
+                color: theme.onPrimary.withOpacity(.7),
+                size: 12,
+              ),
+            ],
+          ),
         ),
       ],
     ),
@@ -134,9 +160,9 @@ CarouselOptions sliderOptions() {
     enableInfiniteScroll: true,
     reverse: false,
     autoPlay: true,
-    autoPlayInterval: Duration(seconds: 3),
+    autoPlayInterval: Duration(seconds: 2),
     autoPlayAnimationDuration: Duration(milliseconds: 800),
-    autoPlayCurve: Curves.fastOutSlowIn,
+    autoPlayCurve: Curves.ease,
     enlargeCenterPage: true,
     enlargeFactor: 0.3,
     scrollDirection: Axis.horizontal,
