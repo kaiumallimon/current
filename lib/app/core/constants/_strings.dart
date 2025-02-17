@@ -19,4 +19,5 @@ class AppString {
   static const haveAccount = 'Already have an account?';
   static const warning = "Warning";
   static const unavailableFeature = 'This feature is not available yet!';
+  static const registerSubtitle = 'Please enter your details below';
 }

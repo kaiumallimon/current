@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
@@ -7,7 +8,21 @@ class SplashController extends GetxController {
     Future.delayed(Duration(seconds: 1), goNext);
   }
 
-  void goNext(){
-    Get.toNamed('/login');
+  void goNext() {
+    // check if logged in
+    isLoggedIn().then((value) {
+      if (value) {
+        Get.offNamed('/dashboard');
+      } else {
+        Get.offNamed('/login');
+      }
+    });
+  }
+
+  // check if logged in
+  Future<bool> isLoggedIn() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final User? user = _auth.currentUser;
+    return user != null;
   }
 }

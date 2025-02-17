@@ -1,35 +1,43 @@
+import 'package:current/app/core/constants/_colors.dart';
+import 'package:current/app/data/repositories/auth/_register_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:current/app/data/repositories/auth/_login_repository.dart';
-import 'package:current/app/core/constants/_colors.dart';
 
-class LoginController extends GetxController {
-  var rememberMe = false.obs;
+class RegisterController extends GetxController {
+  var privacyPolicy = false.obs;
   var isLoading = false.obs;
 
-  final LoginRepository _loginRepository = Get.put(LoginRepository());
+  final RegisterRepository _registerRepository = Get.put(RegisterRepository());
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
-  void onRememberMeChanged(bool value) {
-    rememberMe.value = value;
+  void togglePrivacyPolicy() {
+    privacyPolicy.toggle();
   }
 
-  void goToSignUp() {
-    if (!isLoading.value) Get.toNamed('/signup');
+  void goToLogin() {
+    if (!isLoading.value) Get.back();
   }
 
-  Future<void> login() async {
-    if (isLoading.value) return; // Prevent multiple requests
+  Future<void> register() async {
+    if (isLoading.value) return; // Prevent multiple clicks
     isLoading.value = true;
 
     final String email = emailController.text.trim();
     final String password = passwordController.text.trim();
+    final String name = nameController.text.trim();
 
-    if (email.isEmpty || password.isEmpty) {
-      showSnackbar('Error', 'Email and password are required', true);
+    if (email.isEmpty || password.isEmpty || name.isEmpty) {
+      showSnackbar('Error', 'All fields are required', true);
+      isLoading.value = false;
+      return;
+    }
+
+    if (!privacyPolicy.value) {
+      showSnackbar('Error', 'You must accept the privacy policy', true);
       isLoading.value = false;
       return;
     }
@@ -38,17 +46,23 @@ class LoginController extends GetxController {
 
     try {
       Map<String, dynamic> response =
-          await _loginRepository.loginWithEmailAndPassword(
+          await _registerRepository.registerWithEmailAndPassword(
         email: email,
         password: password,
+        name: name,
       );
 
       hideLoadingDialog();
       showSnackbar(response['success'] ? 'Success' : 'Error',
           response['message'], !response['success']);
 
-      if (response['success']) {
-        Get.offAllNamed('/dashboard'); // Navigate to home on success
+      if (response['success']!) {
+        // clear
+        emailController.clear();
+        passwordController.clear();
+        nameController.clear();
+
+        Get.offNamed('/login');
       }
     } catch (e) {
       hideLoadingDialog();
@@ -84,22 +98,5 @@ class LoginController extends GetxController {
 
   void hideLoadingDialog() {
     if (Get.isDialogOpen ?? false) Get.back();
-  }
-
-  void showWarningDialog(String text, String title) {
-    Get.defaultDialog(
-      title: title,
-      middleText: text,
-      textConfirm: 'OK',
-      backgroundColor: Get.theme.colorScheme.onSurface,
-      titleStyle: TextStyle(color: Get.theme.colorScheme.primary),
-      middleTextStyle: TextStyle(color: Get.theme.colorScheme.surface),
-      barrierDismissible: false,
-      buttonColor: Get.theme.colorScheme.primary,
-      contentPadding: EdgeInsets.all(20),
-      onConfirm: () {
-        Get.back();
-      },
-    );
   }
 }

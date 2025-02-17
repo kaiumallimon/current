@@ -1,5 +1,6 @@
 import 'package:current/app/modules/auth/view/_login_view.dart';
 import 'package:current/app/modules/auth/view/_signup_view.dart';
+import 'package:current/app/modules/dashboard_wrapper/view/_dashboard_wrapper.dart';
 // import 'package:go_router/go_router.dart';
 
 import '../../modules/splash/view/splash_view.dart';
@@ -18,7 +19,6 @@ class AppRoute {
   //   GoRoute(path: '/signup', builder: (context, state) => SignupView()),
   // ]);
 
-
   final List<GetPage> getPages = [
     // splash
     GetPage(name: '/', page: () => SplashView()),
@@ -28,5 +28,8 @@ class AppRoute {
 
     // signup
     GetPage(name: '/signup', page: () => SignupView()),
+
+    // dashboard
+    GetPage(name: '/dashboard', page: () => DashboardWrapper()),
   ];
 }
