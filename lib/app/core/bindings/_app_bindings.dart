@@ -1,3 +1,4 @@
+import 'package:current/app/modules/dashboard_wrapper/controller/_navigation_controller.dart';
 import 'package:current/app/modules/splash/controller/_splash_controller.dart';
 import 'package:get/get.dart';
 
@@ -18,5 +19,7 @@ class AppBindings extends Bindings {
     Get.put<RegisterController>(RegisterController());
 
     Get.put<PrivacyPolicyController>(PrivacyPolicyController());
+
+    Get.put(NavigationController());
   }
 }
