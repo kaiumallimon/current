@@ -1,3 +1,5 @@
+import 'package:current/app/data/repositories/hive/_auth_opt.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -44,11 +46,23 @@ class LoginController extends GetxController {
       );
 
       hideLoadingDialog();
-      showSnackbar(response['success'] ? 'Success' : 'Error',
-          response['message'], !response['success']);
+      // showSnackbar(!response['success'] ? 'Success' : 'Error',
+      //     response['message'], !response['success']);
+
+      if (!response['success']) {
+        showWarningDialog(response['message'], 'Error');
+        return;
+      }
 
       if (response['success']) {
-        Get.offAllNamed('/dashboard'); // Navigate to home on success
+        // check if remember me is checked
+        if (rememberMe.value) {
+          // get the user:
+          final user = response['user']! as User;
+
+          AuthOptions().saveSession(user.uid, user.email!, response['name']);
+        }
+        Get.offAllNamed('/dashboard');
       }
     } catch (e) {
       hideLoadingDialog();
@@ -103,7 +117,7 @@ class LoginController extends GetxController {
     );
   }
 
-  void logout(){
+  void logout() {
     _loginRepository.logout();
     Get.offAllNamed('/login');
   }

@@ -9,4 +9,10 @@ class AuthOptions {
       'email': email,
     });
   }
+
+
+  Future<bool> isRemembered() async {
+    final box = await Hive.openBox('authBox');
+    return box.containsKey('user');
+  }
 }

@@ -13,7 +13,7 @@ class AppBindings extends Bindings {
 
     Get.lazyPut<SplashController>(() => SplashController());
 
-    Get.lazyPut<LoginController>(() => LoginController());
+    Get.put<LoginController>(LoginController());
 
     Get.put<RegisterController>(RegisterController());
 
