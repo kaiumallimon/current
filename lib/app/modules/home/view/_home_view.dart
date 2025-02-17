@@ -27,7 +27,8 @@ class HomeView extends StatelessWidget {
       padding: EdgeInsets.only(top: statusBarHeight),
       child: RefreshIndicator(
         onRefresh: () async {
-          controller.refreshHome();
+          // refresh the home page
+          await controller.refreshHome();
         },
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -95,6 +96,4 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
-
-  
 }

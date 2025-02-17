@@ -58,8 +58,7 @@ class HomeController extends GetxController {
     );
   }
 
-
-  void refreshHome() {
+  Future<void> refreshHome() async {
     fetchCategories();
     fetchBanners();
   }
