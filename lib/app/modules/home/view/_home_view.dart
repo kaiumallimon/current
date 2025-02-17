@@ -1,15 +1,12 @@
-import 'package:blur/blur.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:current/app/core/constants/_assets.dart';
 import 'package:current/app/core/constants/_sizes.dart';
 import 'package:current/app/core/widgets/_custom_shimmer.dart';
-import 'package:current/app/core/widgets/_gradient_bg.dart';
 import 'package:current/app/data/models/home/_category_model.dart';
 import 'package:current/app/modules/home/controller/_home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/home/_banner_model.dart';
+import 'sections/_home_banner_slider.dart';
 import 'sections/_home_categories.dart';
 import 'sections/_home_categories_shimmer.dart';
 import 'sections/_home_searchbar.dart';
@@ -89,109 +86,7 @@ class HomeView extends StatelessWidget {
                   // Banners
                   List<BannerModel> banners = controller.banners;
 
-                  return CarouselSlider(
-                      items: banners
-                          .map((banner) => Container(
-                                width: double.infinity,
-                                height: 250, // Set the height of each banner
-                                margin: const EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.transparent,
-                                  border: Border.all(
-                                    color: theme.primary.withOpacity(.3),
-                                    width: 1,
-                                  ),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Stack(
-                                    fit: StackFit.expand,
-                                    children: [
-                                      // Background image as full screen
-                                      FadeInImage(
-                                        placeholder:
-                                            NetworkImage(AppAssets.placeholder),
-                                        image: NetworkImage(banner.image),
-                                        fit: BoxFit.cover,
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                      ),
-                                      // Overlay gradient
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              theme.primary.withOpacity(.2),
-                                              Colors.transparent,
-                                            ],
-                                            begin: Alignment.bottomCenter,
-                                            end: Alignment.topCenter,
-                                          ),
-                                        ),
-                                      ),
-                                      // Overlay content
-                                      Positioned(
-                                        left: 20,
-                                        bottom: 20,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              banner.title,
-                                              style: TextStyle(
-                                                color: theme.onSurface,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                                height:
-                                                    5), // Add some spacing between title and subtitle
-                                            Wrap(
-                                              children: [
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.8, // You can adjust the width as needed
-                                                  child: Text(
-                                                    banner.subtitle,
-                                                    maxLines: 3,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                      color: theme.onSurface
-                                                          .withOpacity(.7),
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ))
-                          .toList(),
-                      options: CarouselOptions(
-                        viewportFraction: 1,
-                        initialPage: 0,
-                        enableInfiniteScroll: true,
-                        reverse: false,
-                        autoPlay: true,
-                        autoPlayInterval: Duration(seconds: 3),
-                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enlargeCenterPage: true,
-                        enlargeFactor: 0.3,
-                        scrollDirection: Axis.horizontal,
-                      ));
+                  return buildHomeBannerSlider(banners, theme, context);
                 }
               })
             ],
@@ -200,4 +95,6 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
+
+  
 }
