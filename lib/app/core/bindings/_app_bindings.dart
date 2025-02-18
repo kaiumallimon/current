@@ -1,3 +1,4 @@
+import 'package:current/app/modules/account/controller/_account_controller.dart';
 import 'package:current/app/modules/dashboard_wrapper/controller/_navigation_controller.dart';
 import 'package:current/app/modules/home/controller/_home_controller.dart';
 import 'package:current/app/modules/splash/controller/_splash_controller.dart';
@@ -24,5 +25,7 @@ class AppBindings extends Bindings {
     Get.put(NavigationController());
 
     Get.lazyPut(() => HomeController());
+
+    Get.put(AccountController());
   }
 }

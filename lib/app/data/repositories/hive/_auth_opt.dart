@@ -10,9 +10,13 @@ class AuthOptions {
     });
   }
 
-
   Future<bool> isRemembered() async {
     final box = await Hive.openBox('authBox');
     return box.containsKey('user');
+  }
+
+  Future<Map<dynamic, dynamic>> getSession() async {
+    final box = await Hive.openBox('authBox');
+    return box.get('user', defaultValue: null) as Map<dynamic, dynamic>;
   }
 }

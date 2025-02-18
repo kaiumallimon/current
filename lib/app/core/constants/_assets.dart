@@ -2,7 +2,10 @@ class AppAssets {
   // logo [image]
   static const String logo = 'assets/images/current-logo.png';
   static const String logo2 = 'assets/images/current-logo_2.png';
-  static const String placeholder = 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png';
+  static const String placeholder =
+      'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png';
+  static const String userPlaceholder =
+      'https://t3.ftcdn.net/jpg/05/57/20/64/360_F_557206404_mRdSsS3OrZGa9iN5xVZl9cPpiq0jkNlu.jpg';
 
   // icons [svg]
   static const String home = 'assets/svgs/home.svg';
