@@ -8,8 +8,9 @@ Coming Soon!
 ```
 
 ### Project Strucutre
-```
-```
+
+
+```bash
 current
 ├──android/
 ├──assets/
@@ -143,7 +144,6 @@ current
 ├──README.md
 ├──.gitignore
 └──.metadata
-```
 ```
 
 ### Author
