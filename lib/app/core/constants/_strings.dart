@@ -20,5 +20,11 @@ class AppString {
   static const warning = "Warning";
   static const unavailableFeature = 'This feature is not available yet!';
   static const registerSubtitle = 'Please enter your details below';
-  static const accountString= 'Account & Preferences';
+  static const accountString = 'Account & Preferences';
+  static const myOrders = 'My Orders';
+  static const allOrders = 'All Orders';
+  static const processingOrders = 'Processing';
+  static const shipped = 'Shipped';
+  static const delivered = 'Delivered';
+  static const returned = 'Returned';
 }

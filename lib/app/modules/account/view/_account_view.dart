@@ -1,9 +1,16 @@
+import 'package:current/app/core/constants/_colors.dart';
 import 'package:current/app/core/constants/_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/_assets.dart';
+import '../../../core/widgets/_custom_page_title.dart';
+import '../../../core/widgets/_custom_tile.dart';
+import '../../../core/widgets/_page_menu_title.dart';
 import '../controller/_account_controller.dart';
+import 'parts/_profile_data.dart';
+import 'parts/_profile_image.dart';
 
 class AccountView extends StatelessWidget {
   const AccountView({super.key});
@@ -23,22 +30,12 @@ class AccountView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // appbar
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                AppString.accountString,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
+          customPageTitle(AppString.accountString),
           // body
           Expanded(
             child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20),
                   // profile info [name, email, points]
@@ -53,63 +50,48 @@ class AccountView extends StatelessWidget {
                     child: Row(
                       children: [
                         // profile image
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            AppAssets.userPlaceholder,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        accountProfileImage(theme),
                         const SizedBox(width: 15),
-
-                        Expanded(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 8,
-                          children: [
-                            Obx(() => Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      controller.userData['name'],
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      controller.userData['email'],
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: theme.onSurface,
-                                      ),
-                                    ),
-                                  ],
-                                )),
-
-                            // points
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: theme.primary.withOpacity(.2),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Text('10 points',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: theme.onSurface,
-                                  )),
-                            ),
-                          ],
-                        ))
+                        // profile data
+                        accountProfileData(controller, theme),
                       ],
                     ),
-                  )
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  //order data
+                  Column(
+                    spacing: 15,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      PageMenuTitle(theme: theme),
+                      CustomTile(
+                          theme: theme,
+                          title: AppString.allOrders,
+                          leading: AppAssets.allOrders,
+                          leadingColor: theme.secondary,
+                          onTap: () {}),
+                      CustomTile(
+                          theme: theme,
+                          title: AppString.processingOrders,
+                          leading: AppAssets.processingOrders,
+                          leadingColor: AppColor.extra,
+                          onTap: () {}),
+                      CustomTile(
+                          theme: theme,
+                          title: AppString.delivered,
+                          leading: AppAssets.delivered,
+                          leadingColor: AppColor.success,
+                          onTap: () {}),
+                      CustomTile(
+                          theme: theme,
+                          title: AppString.returned,
+                          leading: AppAssets.returned,
+                          leadingColor: theme.error,
+                          onTap: () {}),
+                    ],
+                  ),
                 ],
               ),
             ),

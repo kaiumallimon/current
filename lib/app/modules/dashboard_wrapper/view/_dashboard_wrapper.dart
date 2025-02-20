@@ -1,6 +1,5 @@
 import 'package:blur/blur.dart';
 import 'package:current/app/core/widgets/_gradient_bg.dart';
-import 'package:current/app/modules/auth/controller/_login_controller.dart';
 import 'package:current/app/modules/dashboard_wrapper/view/sections/_bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +23,7 @@ class DashboardWrapper extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: theme.brightness,
-      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarColor: theme.surface,
       systemNavigationBarIconBrightness: theme.brightness,
     ));
 

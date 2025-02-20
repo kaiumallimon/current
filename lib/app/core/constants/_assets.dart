@@ -20,4 +20,11 @@ class AppAssets {
   static const String cart = 'assets/svgs/cart.svg';
   static const String facebook = 'assets/svgs/facebook.svg';
   static const String google = 'assets/svgs/google.svg';
+
+  // orders [svg]
+  static const String allOrders = 'assets/svgs/all_orders.svg';
+  static const String processingOrders = 'assets/svgs/processing.svg';
+  static const String shipped = 'assets/svgs/shipped.svg';
+  static const String delivered = 'assets/svgs/delivered.svg';
+  static const String returned = 'assets/svgs/return.svg';
 }
