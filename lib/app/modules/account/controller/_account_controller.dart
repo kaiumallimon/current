@@ -6,8 +6,8 @@ class AccountController extends GetxController {
   var userData = {}.obs;
 
   void fetchUserData() async {
-    var user = await AuthOptions().getSession();
-    userData.value = user;
+    final user = await AuthOptions().getSession();
+    userData.value = user!;
   }
 
   @override

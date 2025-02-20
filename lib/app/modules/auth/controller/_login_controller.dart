@@ -6,6 +6,8 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:current/app/data/repositories/auth/_login_repository.dart';
 import 'package:current/app/core/constants/_colors.dart';
 
+import '../../account/controller/_account_controller.dart';
+
 class LoginController extends GetxController {
   var rememberMe = false.obs;
   var isLoading = false.obs;
@@ -61,6 +63,8 @@ class LoginController extends GetxController {
           final user = response['user']! as User;
 
           AuthOptions().saveSession(user.uid, user.email!, response['name']);
+
+          Get.put(AccountController());
         }
         Get.offAllNamed('/dashboard');
       }

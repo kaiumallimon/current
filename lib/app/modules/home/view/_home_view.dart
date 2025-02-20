@@ -1,6 +1,7 @@
 import 'package:current/app/core/constants/_sizes.dart';
 import 'package:current/app/core/widgets/_custom_shimmer.dart';
 import 'package:current/app/data/models/home/_category_model.dart';
+import 'package:current/app/modules/account/controller/_account_controller.dart';
 import 'package:current/app/modules/home/controller/_home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,70 +31,110 @@ class HomeView extends StatelessWidget {
           // refresh the home page
           await controller.refreshHome();
         },
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+        child: Padding(
           padding: const EdgeInsets.symmetric(
               horizontal: AppSize.paddingSide, vertical: 10),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 15,
             children: [
-              // Search bar
-              buildSearchBar(theme),
+              // Header
+              homeHeader(theme),
+              // Body
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 15,
+                    children: [
+                      // Search bar
+                      buildSearchBar(theme),
 
-              // Categories
-              Obx(() {
-                if (controller.isCategoryLoading.value) {
-                  // Show shimmer effect while loading
-                  return homeCategoriesShimmer();
-                } else {
-                  // Show categories
-                  List<CategoryModel> categories = controller.categories;
+                      // Categories
+                      Obx(() {
+                        if (controller.isCategoryLoading.value) {
+                          // Show shimmer effect while loading
+                          return homeCategoriesShimmer();
+                        } else {
+                          // Show categories
+                          List<CategoryModel> categories =
+                              controller.categories;
 
-                  if (categories.isEmpty) {
-                    return const Center(
-                      child: Text("No categories available"),
-                    );
-                  }
+                          if (categories.isEmpty) {
+                            return const Center(
+                              child: Text("No categories available"),
+                            );
+                          }
 
-                  return SizedBox(
-                    height: 35, // Define fixed height
-                    child: ListView.builder(
-                      itemCount: categories.length,
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child:
-                            buildHomeCategories(categories, index, theme, () {
-                          // Handle category tap
-                        }),
-                      ),
-                    ),
-                  );
-                }
-              }),
+                          return SizedBox(
+                            height: 35, // Define fixed height
+                            child: ListView.builder(
+                              itemCount: categories.length,
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) => Container(
+                                margin: const EdgeInsets.only(right: 10),
+                                child: buildHomeCategories(
+                                    categories, index, theme, () {
+                                  // Handle category tap
+                                }),
+                              ),
+                            ),
+                          );
+                        }
+                      }),
 
-              // Banners
-              Obx(() {
-                if (controller.isBannerLoading.value) {
-                  return CustomShimmer(
-                    height: 120,
-                    width: double.infinity,
-                    borderRadius: BorderRadius.circular(20),
-                  );
-                } else {
-                  // Banners
-                  List<BannerModel> banners = controller.banners;
+                      // Banners
+                      Obx(() {
+                        if (controller.isBannerLoading.value) {
+                          return CustomShimmer(
+                            height: 120,
+                            width: double.infinity,
+                            borderRadius: BorderRadius.circular(20),
+                          );
+                        } else {
+                          // Banners
+                          List<BannerModel> banners = controller.banners;
 
-                  return buildHomeBannerSlider(banners, theme, context);
-                }
-              })
+                          return buildHomeBannerSlider(banners, theme, context);
+                        }
+                      })
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Row homeHeader(ColorScheme theme) {
+    return Row(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Welcome',
+              style: TextStyle(
+                color: theme.onSurface.withOpacity(.5),
+                fontSize: 17,
+              ),
+            ),
+            Text('${Get.find<AccountController>().userData['name']}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: theme.onSurface,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                )),
+          ],
+        )
+      ],
     );
   }
 }
